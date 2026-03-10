@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Executive Field Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0d1f3c;
+    --blue: #1a4480;
+    --accent: #e86c2f;
+    --teal: #1e7a6e;
+    --light: #f4f7fb;
+    --mid: #dde4ef;
+    --text: #1a1a2e;
+    --muted: #5a6a80;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #e8ecf2;
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--navy);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem; height: 56px;
+  }
+  nav .logo { color: #fff; font-weight: 700; font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; }
+  nav .nav-links { display: flex; gap: 1.5rem; }
+  nav .nav-links a { color: rgba(255,255,255,.65); font-size: .8rem; text-decoration: none; transition: color .2s; }
+  nav .nav-links a:hover { color: #fff; }
+
+  /* PAGES */
+  .page { max-width: 860px; margin: 0 auto; padding: 80px 1.5rem 3rem; }
+
+  /* ── COVER ── */
+  #cover {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding-top: 56px;
+  }
+  .cover-card {
+    background: linear-gradient(145deg, var(--navy) 0%, #16355e 60%, #1a4480 100%);
+    border-radius: 16px;
+    padding: 4rem 3.5rem;
+    max-width: 860px; width: 100%;
+    position: relative; overflow: hidden;
+    box-shadow: 0 24px 64px rgba(13,31,60,.45);
+  }
+  .cover-card::before {
+    content: '';
+    position: absolute; top: -80px; right: -80px;
+    width: 340px; height: 340px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,108,47,.25) 0%, transparent 70%);
+  }
+  .cover-card::after {
+    content: '';
+    position: absolute; bottom: -60px; left: 30%;
+    width: 260px; height: 260px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(30,122,110,.2) 0%, transparent 70%);
+  }
+  .cover-eyebrow {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff; font-size: .7rem; font-weight: 700;
+    letter-spacing: .12em; text-transform: uppercase;
+    padding: .35rem .85rem; border-radius: 4px;
+    margin-bottom: 1.8rem;
+  }
+  .cover-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: #fff; line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+  .cover-title span { color: #f0a46a; }
+  .cover-sub {
+    color: rgba(255,255,255,.72);
+    font-size: 1rem; line-height: 1.7;
+    max-width: 560px; margin-bottom: 2.5rem;
+  }
+  .cover-stats {
+    display: flex; flex-wrap: wrap; gap: 1.2rem;
+    margin-bottom: 2.8rem;
+  }
+  .stat-pill {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 8px; padding: .8rem 1.2rem;
+    flex: 1; min-width: 180px;
+  }
+  .stat-pill .num { font-size: 1.5rem; font-weight: 800; color: #f0a46a; }
+  .stat-pill .lbl { font-size: .72rem; color: rgba(255,255,255,.6); margin-top: .15rem; line-height: 1.4; }
+  .toc-box {
+    background: rgba(255,255,255,.06);
+    border-left: 3px solid var(--accent);
+    border-radius: 0 8px 8px 0;
+    padding: 1.2rem 1.5rem;
+  }
+  .toc-box h3 { color: rgba(255,255,255,.5); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; margin-bottom: .8rem; }
+  .toc-box a {
+    display: block; color: rgba(255,255,255,.85); font-size: .88rem;
+    text-decoration: none; padding: .3rem 0;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    transition: color .2s;
+  }
+  .toc-box a:last-child { border-bottom: none; }
+  .toc-box a:hover { color: #f0a46a; }
+  .toc-box a span { color: var(--accent); margin-right: .6rem; font-weight: 700; font-size: .8rem; }
+
+  /* ── CHAPTER SECTIONS ── */
+  .chapter-header {
+    display: flex; align-items: flex-start; gap: 1.2rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid var(--mid);
+  }
+  .ch-num {
+    background: var(--navy); color: #fff;
+    font-size: .7rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+    padding: .5rem .9rem; border-radius: 6px; white-space: nowrap; margin-top: .4rem;
+  }
+  .ch-num.accent { background: var(--accent); }
+  .ch-num.teal { background: var(--teal); }
+  .ch-title { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 3.5vw, 2.1rem); color: var(--navy); line-height: 1.2; }
+  .ch-desc { color: var(--muted); font-size: .95rem; margin-top: .5rem; line-height: 1.6; }
+
+  /* CHALLENGE CARDS */
+  .challenge-grid { display: grid; gap: 1.2rem; margin-bottom: 1.5rem; }
+  .c-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 1.5rem;
+    display: flex; gap: 1.2rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .c-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.1); }
+  .c-icon {
+    width: 42px; height: 42px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; flex-shrink: 0;
+  }
+  .c-card h3 { font-size: .95rem; font-weight: 700; color: var(--navy); margin-bottom: .4rem; }
+  .c-card p { font-size: .85rem; color: var(--muted); line-height: 1.65; }
+
+  /* SOLUTION CARDS */
+  .solution-section { margin-top: 2.5rem; }
+  .solution-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; color: var(--navy);
+    margin-bottom: 1.2rem;
+    padding-left: 1rem;
+    border-left: 4px solid var(--accent);
+  }
+  .sol-grid { display: grid; gap: 1rem; }
+  .sol-item {
+    background: var(--light);
+    border-radius: 8px; padding: 1.3rem 1.5rem;
+    border-left: 3px solid transparent;
+  }
+  .sol-item.s1 { border-color: #4a90d9; }
+  .sol-item.s2 { border-color: var(--teal); }
+  .sol-item.s3 { border-color: var(--accent); }
+  .sol-item.s4 { border-color: #9b59b6; }
+  .sol-item.s5 { border-color: #e74c3c; }
+  .sol-item h4 { font-size: .88rem; font-weight: 700; color: var(--navy); margin-bottom: .4rem; }
+  .sol-item p { font-size: .83rem; color: var(--muted); line-height: 1.6; }
+
+  /* BENEFITS */
+  .benefit-cards { display: grid; gap: 1.2rem; }
+  .b-card {
+    background: #fff;
+    border-radius: 10px; padding: 1.6rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    display: grid; grid-template-columns: auto 1fr; gap: 1.2rem; align-items: start;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .b-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.1); }
+  .b-num {
+    width: 48px; height: 48px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; font-weight: 800; color: #fff; flex-shrink: 0;
+  }
+  .b-card h3 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: .45rem; }
+  .b-card p { font-size: .85rem; color: var(--muted); line-height: 1.65; }
+
+  .compounding-box {
+    margin-top: 2rem;
+    background: linear-gradient(135deg, var(--navy), #1a4480);
+    border-radius: 12px; padding: 2rem;
+    color: #fff;
+  }
+  .compounding-box h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; margin-bottom: .8rem; color: #f0a46a; }
+  .compounding-box p { font-size: .88rem; line-height: 1.75; color: rgba(255,255,255,.8); }
+  .chain { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.2rem; align-items: center; }
+  .chain-item {
+    background: rgba(255,255,255,.12); border-radius: 20px;
+    padding: .35rem .85rem; font-size: .78rem; color: rgba(255,255,255,.9);
+  }
+  .chain-arrow { color: var(--accent); font-weight: 700; font-size: .9rem; }
+
+  /* IMPERATIVE */
+  .imperative-content { background: #fff; border-radius: 12px; padding: 2.2rem; box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+  .imperative-content p { font-size: .95rem; line-height: 1.8; color: #2c3e50; margin-bottom: 1.2rem; }
+  .imperative-content p:last-child { margin-bottom: 0; }
+  .cta-bar {
+    margin-top: 2rem;
+    background: linear-gradient(135deg, var(--accent), #c75b1f);
+    border-radius: 10px; padding: 1.8rem 2rem;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  }
+  .cta-bar p { color: #fff; font-size: .95rem; font-weight: 600; max-width: 500px; line-height: 1.5; }
+  .cta-btn {
+    background: #fff; color: var(--accent);
+    border: none; border-radius: 6px;
+    padding: .7rem 1.5rem; font-size: .85rem; font-weight: 700;
+    cursor: pointer; white-space: nowrap;
+    transition: transform .15s;
+  }
+  .cta-btn:hover { transform: scale(1.03); }
+
+  /* DIVIDER */
+  .section-divider {
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    margin: 3rem 0; border-radius: 2px;
+  }
+
+  /* INTRO */
+  .intro-card {
+    background: #fff; border-radius: 12px; padding: 2.2rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    margin-bottom: 2rem;
+  }
+  .intro-card p { font-size: .95rem; line-height: 1.8; color: #2c3e50; margin-bottom: 1rem; }
+  .intro-card p:last-child { margin-bottom: 0; }
+  .how-to-box {
+    background: var(--light); border-radius: 8px; padding: 1.4rem 1.6rem;
+    border-left: 4px solid var(--teal); margin-top: 1.5rem;
+  }
+  .how-to-box h3 { font-size: .85rem; font-weight: 700; color: var(--teal); text-transform: uppercase; letter-spacing: .06em; margin-bottom: .7rem; }
+  .how-to-box p { font-size: .87rem; color: var(--muted); line-height: 1.65; }
+
+  @media (max-width: 600px) {
+    .cover-card { padding: 2.5rem 1.5rem; }
+    .chapter-header { flex-direction: column; gap: .6rem; }
+    .cta-bar { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Executive Field Guide · AI in Industrial Operations</div>
+  <div class="nav-links">
+    <a href="#cover">Cover</a>
+    <a href="#intro">Intro</a>
+    <a href="#ch1">Challenges</a>
+    <a href="#ch2">Benefits</a>
+    <a href="#ch3">Imperative</a>
+  </div>
+</nav>
+
+<!-- COVER -->
+<section id="cover" class="page">
+  <div class="cover-card">
+    <div class="cover-eyebrow">Executive Field Guide</div>
+    <h1 class="cover-title">AI in Chemical Manufacturing<br>&amp; <span>Gas Distribution</span></h1>
+    <p class="cover-sub">A practical guide to the top 5 challenges, top 5 benefits, and high-impact use cases for mid-market industrial leaders navigating the AI transformation.</p>
+
+    <div class="cover-stats">
+      <div class="stat-pill">
+        <div class="num">$153.9B</div>
+        <div class="lbl">Projected industrial AI market size by 2030 — IoT Analytics, 2025</div>
+      </div>
+      <div class="stat-pill">
+        <div class="num">92%</div>
+        <div class="lbl">of manufacturers believe AI will be the main driver of competitiveness — Deloitte, 2025</div>
+      </div>
+      <div class="stat-pill">
+        <div class="num">39%</div>
+        <div class="lbl">of manufacturers report any earnings impact from AI — McKinsey, 2025</div>
+      </div>
+    </div>
+
+    <div class="toc-box">
+      <h3>Contents</h3>
+      <a href="#intro"><span>00</span>Introduction</a>
+      <a href="#ch1"><span>01</span>Top 5 Challenges of AI Adoption — and How to Address Them</a>
+      <a href="#ch2"><span>02</span>Top 5 Benefits of AI in Industrial Operations</a>
+      <a href="#ch3"><span>03</span>The Executive Imperative</a>
+    </div>
+  </div>
+</section>
+
+<!-- INTRO -->
+<section id="intro" class="page">
+  <div class="chapter-header">
+    <div class="ch-num">Introduction</div>
+    <div>
+      <div class="ch-title">The Question Has Already Been Answered</div>
+      <div class="ch-desc">The question is no longer <em>whether</em> AI will transform industrial operations. It already is.</div>
+    </div>
+  </div>
+
+  <div class="intro-card">
+    <p>As an executive in chemical manufacturing or gas distribution, you're operating in one of the most complex, capital-intensive, and margin-sensitive environments in the North American economy. Feedstock volatility, tightening environmental regulations, aging workforces, pipeline integrity requirements, and relentless pressure to improve throughput while reducing cost: these are not new problems. But AI is offering genuinely new answers to them.</p>
+    <p>This guide was written specifically for leaders at mid-market companies — those with revenues between $50M and $800M — where the stakes of getting AI right are especially high. Unlike large multinationals with dedicated data science teams and unlimited R&amp;D budgets, you need AI strategies that are practical, fast to ROI, and deployable with the talent and technology you already have.</p>
+    <p>We have structured this guide around three pillars: the real challenges you will face in deploying AI, the tangible benefits that justify the investment, and a set of concrete use cases you can act on in the next 90 days.</p>
+    <div class="how-to-box">
+      <h3>How to Use This Guide</h3>
+      <p>Read the Challenges chapter first — organizational readiness matters more than technology selection. Then use the Benefits and Use Cases chapters to build your internal business case. The 90-Day Roadmap at the end gives you a framework to move from strategy to action.</p>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" style="max-width:860px;margin:0 auto 0;"></div>
+
+<!-- CHAPTER 1 -->
+<section id="ch1" class="page">
+  <div class="chapter-header">
+    <div class="ch-num accent">Chapter 01</div>
+    <div>
+      <div class="ch-title">Top 5 Challenges of AI Adoption</div>
+      <div class="ch-desc">AI adoption in industrial settings isn't primarily a technology problem — it's an organizational, data, and change management problem.</div>
+    </div>
+  </div>
+
+  <div class="challenge-grid">
+    <div class="c-card">
+      <div class="c-icon" style="background:#e8f0fd;">🗂️</div>
+      <div>
+        <h3>#1 — Data Silos &amp; Poor Data Quality</h3>
+        <p>Operational data lives in disconnected systems — DCS, SCADA, ERP, LIMS — often in different formats with years of inconsistent tagging. AI models are only as good as the data they consume, and this problem is compounded by assets of varying ages running on different control platforms.</p>
+      </div>
+    </div>
+    <div class="c-card">
+      <div class="c-icon" style="background:#fef0e8;">👷</div>
+      <div>
+        <h3>#2 — Workforce Readiness &amp; Cultural Resistance</h3>
+        <p>Experienced operators and field technicians trust their instincts. AI recommendations that conflict with decades of institutional knowledge are often dismissed. Bridging that gap requires deliberate change management, especially in environments where a wrong call has serious safety consequences.</p>
+      </div>
+    </div>
+    <div class="c-card">
+      <div class="c-icon" style="background:#e8f7f5;">🔌</div>
+      <div>
+        <h3>#3 — OT/IT Integration Complexity</h3>
+        <p>Modern AI platforms need data that plant floor systems weren't built to share. Moving too fast here can create security exposure or, worse, disrupt the operations you were trying to improve.</p>
+      </div>
+    </div>
+    <div class="c-card">
+      <div class="c-icon" style="background:#f5eef8;">📊</div>
+      <div>
+        <h3>#4 — Difficulty Quantifying ROI Upfront</h3>
+        <p>Boards and CFOs demand clear returns. AI pilots often show promise but lack rigorous baseline measurement, making it difficult to attribute value, justify scaling, or compare against alternative capital uses.</p>
+      </div>
+    </div>
+    <div class="c-card">
+      <div class="c-icon" style="background:#fdecea;">🔒</div>
+      <div>
+        <h3>#5 — Cybersecurity, Regulatory &amp; Compliance Risk</h3>
+        <p>A regulatory misstep in chemical manufacturing or gas distribution goes well beyond a fine — we're talking environmental incidents, worker injuries, or a facility shutdown. AI systems create new data pathways that many mid-market companies aren't yet equipped to govern, especially where AI intersects with Safety Data Sheets and DOT compliance.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="solution-section">
+    <h2>Navigating Each Challenge</h2>
+    <div class="sol-grid">
+      <div class="sol-item s1">
+        <h4>If your blocker is Data Silos &amp; Quality…</h4>
+        <p>Start by identifying the one or two data streams most relevant to your target use case. A targeted data foundation beats a perfect enterprise data strategy that takes three years to build.</p>
+      </div>
+      <div class="sol-item s2">
+        <h4>If your blocker is Workforce Readiness…</h4>
+        <p>Treat AI as a "co-pilot," not a replacement. Involve your most experienced people in tool design — their domain knowledge makes models reliable, and their buy-in makes adoption stick.</p>
+      </div>
+      <div class="sol-item s3">
+        <h4>If your blocker is OT/IT Integration…</h4>
+        <p>Start by pulling data from your existing process historian rather than going directly into control systems. Bring your OT team in early — securing a system after the fact always costs more.</p>
+      </div>
+      <div class="sol-item s4">
+        <h4>If you're struggling with ROI Justification…</h4>
+        <p>Define your baseline before you deploy. Document current unplanned downtime rates, maintenance costs, energy consumption, and yield variances, then build a simple value model around them.</p>
+      </div>
+      <div class="sol-item s5">
+        <h4>Addressing Security &amp; Compliance…</h4>
+        <p>Establish an AI governance policy before your first deployment — covering data ownership, cloud data permissions, model output auditing, and accountability. Engage legal, EHS, and operations as co-owners from day one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" style="max-width:860px;margin:0 auto 0;"></div>
+
+<!-- CHAPTER 2 -->
+<section id="ch2" class="page">
+  <div class="chapter-header">
+    <div class="ch-num teal">Chapter 02</div>
+    <div>
+      <div class="ch-title">Top 5 Benefits of AI in Industrial Operations</div>
+      <div class="ch-desc">When properly implemented, AI doesn't just improve existing processes — it fundamentally changes what's operationally possible.</div>
+    </div>
+  </div>
+
+  <div class="benefit-cards">
+    <div class="b-card">
+      <div class="b-num" style="background:#1a4480;">1</div>
+      <div>
+        <h3>Predictive Maintenance &amp; Asset Reliability</h3>
+        <p>AI models analyzing vibration, pressure, temperature, and flow data can predict equipment failures days or weeks in advance — transforming reactive maintenance into condition-based programs. For gas distribution, this means fewer emergency pipeline repairs and less unplanned service disruption.</p>
+      </div>
+    </div>
+    <div class="b-card">
+      <div class="b-num" style="background:#e86c2f;">2</div>
+      <div>
+        <h3>Real-Time Process Optimization</h3>
+        <p>Advanced process control powered by machine learning continuously adjusts operating conditions to maximize yield, throughput, or energy efficiency — often outperforming the best human operator by running optimizations 24/7 without fatigue or variability.</p>
+      </div>
+    </div>
+    <div class="b-card">
+      <div class="b-num" style="background:#1e7a6e;">3</div>
+      <div>
+        <h3>Enhanced Safety &amp; Risk Management</h3>
+        <p>AI-backed technology can automatically validate SDS and GHS compliance every time a formulation changes, flag hazardous material conflicts before they reach production, and manage the full incident lifecycle from initial observation through root cause analysis and resolution.</p>
+      </div>
+    </div>
+    <div class="b-card">
+      <div class="b-num" style="background:#7b3fa0;">4</div>
+      <div>
+        <h3>Supply Chain &amp; Distribution Intelligence</h3>
+        <p>AI-driven demand forecasting and inventory optimization reduce raw material stock-outs and excess working capital. For gas distributors, AI improves delivery scheduling, route optimization, cylinder and tank inventory management, and demand forecasting by geography and season.</p>
+      </div>
+    </div>
+    <div class="b-card">
+      <div class="b-num" style="background:#2e7d32;">5</div>
+      <div>
+        <h3>Sustainability &amp; Emissions Performance</h3>
+        <p>AI enables more precise emissions monitoring, energy optimization, and reduction of fugitive gas losses. For gas distributors, AI-powered tools can automatically capture chain-of-custody records, generate Certificates of Analysis, and maintain the audit trails that regulators and customers increasingly expect.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="compounding-box">
+    <h3>The Compounding Effect</h3>
+    <p>One of the most underappreciated aspects of industrial AI is how these benefits build on each other. The gains don't just stack — they multiply.</p>
+    <div class="chain">
+      <span class="chain-item">Predictive Maintenance</span>
+      <span class="chain-arrow">→</span>
+      <span class="chain-item">Less Unplanned Downtime</span>
+      <span class="chain-arrow">→</span>
+      <span class="chain-item">Stable Process Conditions</span>
+      <span class="chain-arrow">→</span>
+      <span class="chain-item">Process Optimization AI Performs Better</span>
+      <span class="chain-arrow">→</span>
+      <span class="chain-item">Lower Energy &amp; Emissions</span>
+      <span class="chain-arrow">→</span>
+      <span class="chain-item">Stronger Sustainability Reporting</span>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider" style="max-width:860px;margin:0 auto 0;"></div>
+
+<!-- CHAPTER 3 -->
+<section id="ch3" class="page">
+  <div class="chapter-header">
+    <div class="ch-num" style="background:#1e7a6e;">Chapter 03</div>
+    <div>
+      <div class="ch-title">The Executive Imperative</div>
+      <div class="ch-desc">AI in chemical manufacturing and gas distribution is not a trend to monitor from a distance.</div>
+    </div>
+  </div>
+
+  <div class="imperative-content">
+    <p>It is already reshaping the competitive landscape, determining which companies operate at the efficiency frontier and which fall behind it.</p>
+    <p>For executives at mid-market companies in these sectors, the window to move from awareness to action is now. The good news is that you don't need to transform the entire enterprise to get started.</p>
+    <p>The companies that will define the next decade of performance in chemical manufacturing and gas distribution will be those that start building their data infrastructure, their AI governance frameworks, and their internal capabilities now — not those waiting for perfect conditions that will never arrive.</p>
+  </div>
+
+  <div class="cta-bar">
+    <p>Start building your data infrastructure, AI governance framework, and internal capabilities today — not when conditions are perfect.</p>
+    <button class="cta-btn" onclick="document.getElementById('ch1').scrollIntoView({behavior:'smooth'})">Begin with Chapter 01 →</button>
+  </div>
+</section>
+
+</body>
+</html>
